@@ -1,0 +1,20 @@
+<mat-table [dataSource]="rooms" class="mat-elevation-z8">
+    <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>Room Code</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.code}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.name}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.address}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="max_capacity">
+        <mat-header-cell *matHeaderCellDef>Maximum Capacity</mat-header-cell>
+        <mat-cell *matCellDef="let cell">{{cell.max_capacity}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef = "tableColumns"></mat-header-row>
+    <mat-row *matRowDef = "let cell; columns: tableColumns;"></mat-row>
+</mat-table>
