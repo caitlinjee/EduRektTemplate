@@ -1,20 +1,70 @@
-<mat-table [dataSource]="rooms" class="mat-elevation-z8">
-    <ng-container matColumnDef="code">
-        <mat-header-cell *matHeaderCellDef>Room Code</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.code}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.name}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.address}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="max_capacity">
-        <mat-header-cell *matHeaderCellDef>Maximum Capacity</mat-header-cell>
-        <mat-cell *matCellDef="let cell">{{cell.max_capacity}}</mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef = "tableColumns"></mat-header-row>
-    <mat-row *matRowDef = "let cell; columns: tableColumns;"></mat-row>
-</mat-table>
+<div class = "row" style="margin-top: 10px">
+    <div class="column-left"><h1 style = "padding-top: 10px; padding-left: 25px; color:deeppink;">Room List</h1></div>
+    <div class = "column-right">
+        <button mat-raised-button style="float: right" color="primary" (click)= "openEditDialog(undefined, 'create')">
+            Add Room
+        </button>
+    </div>
+</div>
+
+<div class = "row" style = "margin-top: 10px">
+    <div class = "column-left">
+        <h2 style="padding-left: 25px; color:lightpink">Filter</h2>
+        <form [formGroup] = "filterForm" style="padding-left: 25px;" (ngSubmit) = "filterOnSubmit()">
+            <mat-label>Filter by Room Code</mat-label>
+            <br>
+            <mat-form-field style = "margin-top: 10px;" appearance="standard">
+                <mat-label>Room Code</mat-label>
+                <input matInput formControlName="code">
+            </mat-form-field>
+            <br>
+            <mat-label>Filter by Name</mat-label>
+            <br>
+            <mat-form-field style = "margin-top: 10px;" appearance="standard">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <br>
+            <mat-label>Filter by Address</mat-label>
+            <br>
+            <mat-form-field style = "margin-top: 10px;" appearance="standard">
+                <mat-label>Address</mat-label>
+                <input matInput formControlName="address">
+            </mat-form-field>
+            <br>
+            <mat-label>Filter by Max Capacity</mat-label>
+            <br>
+            <mat-form-field style = "margin-top: 10px;" appearance="standard">
+                <mat-label>Max Capacity</mat-label>
+                <input matInput type="number" min="1" value="1" pattern= "\d+" formControlName="max_capacity">
+            </mat-form-field>
+            <br>
+
+            <button type="submit" mat-raised-button color="primary" [disabled] = "!filterForm.valid">
+                Filter
+            </button>
+        </form>
+    </div>
+    <div class="column-right">
+        <mat-table [dataSource]="rooms" class="mat-elevation-z8">
+            <ng-container matColumnDef="code">
+                <mat-header-cell *matHeaderCellDef>Room Code</mat-header-cell>
+                <mat-cell *matCellDef="let cell">{{cell.code}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                <mat-cell *matCellDef="let cell">{{cell.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="address">
+                <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+                <mat-cell *matCellDef="let cell">{{cell.address}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="max_capacity">
+                <mat-header-cell *matHeaderCellDef>Maximum Capacity</mat-header-cell>
+                <mat-cell *matCellDef="let cell">{{cell.max_capacity}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef = "tableColumns"></mat-header-row>
+            <mat-row matRipple *matRowDef = "let cell; columns: tableColumns;" (click)="openEditDialog(cell, 'edit')"></mat-row>
+        </mat-table>
+    </div>
+</div>
