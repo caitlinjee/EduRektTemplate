@@ -19,12 +19,12 @@ export class StudentService {
     return this.http.get(`${this.baseUrlStudent}/${id}`);
   }
 
-  createStudent(room: any): Observable<object> {
-    return this.http.post(`${this.baseUrlStudent}`, room);
+  createStudent(student: any): Observable<object> {
+    return this.http.post(`${this.baseUrlStudent}`, student);
   }
 
-  updateStudent(id: string, room: any): Observable<object> {
-    return this.http.put(`${this.baseUrlStudent}/${id}`, room);
+  updateStudent(id: string, student: any): Observable<object> {
+    return this.http.put(`${this.baseUrlStudent}/${id}`, student);
   } 
 
   deleteStudent(id: string): Observable<any> {

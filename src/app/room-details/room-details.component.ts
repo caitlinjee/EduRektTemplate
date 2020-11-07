@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Room } from '../model-service/room/room';
 import { RoomService } from '../model-service/room/room.service';
@@ -13,6 +14,7 @@ export class RoomDetailsComponent implements OnInit {
 
   room: any;
   roomForm: FormGroup;
+  deleteForm: FormGroup
   
   hasData: boolean;
 
@@ -41,6 +43,8 @@ export class RoomDetailsComponent implements OnInit {
       return 'Create Room';
     } else if (this.roomData.mode === 'edit') {
       return 'Edit Room';
+    } else if (this.roomData.mode === 'delete') {
+      return 'Delete Rooms';
     }
   }
 
@@ -54,6 +58,10 @@ export class RoomDetailsComponent implements OnInit {
       const dataCopy = {...data};
       const finalData: Room = Object.assign(dataCopy, {code: this.roomData.room.code}) as Room;
       this.roomService.updateRoom(this.roomData.room.code, finalData).subscribe();
+    } else if (this.roomData.mode === 'delete') {
+      //console.log(data);
+      const dataCopy = {...data};
+      this.roomService.deleteRoom(this.roomData.room.code).subscribe();
     }
   }
 

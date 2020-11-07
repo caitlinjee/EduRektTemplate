@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Student } from '../model-service/student/student';
+import { StudentService } from '../model-service/student/student.service';
 
 @Component({
   selector: 'app-student-details',
@@ -7,9 +11,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentDetailsComponent implements OnInit {
 
-  constructor() { }
+  student: any;
+  studentForm: FormGroup;
+  
+  hasData: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<StudentDetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) public studentData: any,
+    public formBuilder: FormBuilder,
+    public studentService: StudentService
+  ) { }
 
   ngOnInit(): void {
+    this.student = this.studentData.student;
+
+    this.hasData = this.student ? true : false;
+
+    this.studentForm = this.formBuilder.group({
+      matric_number: [{value: this.student ? this.student.matric_number : '', disabled: this.student ? true : false}, Validators.required],
+      name: [this.student ? this.student.name : '', Validators.required],
+      course: [this.student ? this.student.course : '', Validators.required],
+      year: [this.student ? this.student.year : '', Validators.required]
+    });
+  }
+
+  getDialogTitle() {
+    if (this.studentData.mode === 'create') {
+      return 'Create Student';
+    } else if (this.studentData.mode === 'edit') {
+      return 'Edit Student';
+    }
+  }
+
+  onSubmit() {
+    this.dialogRef.close();
+    const data = this.studentForm.value;
+    if (this.studentData.mode === 'create') {
+      this.studentService.createStudent(data).subscribe();
+    } else if (this.studentData.mode === 'edit') {
+      //console.log(data);
+      const dataCopy = {...data};
+      const finalData: Student = Object.assign(dataCopy, {matric_number: this.studentData.student.matric_number}) as Student;
+      this.studentService.updateStudent(this.studentData.student.matric_number, finalData).subscribe();
+    }
+  }
+
+  onDelete() {
+    this.dialogRef.close({delete: true});
   }
 
 }

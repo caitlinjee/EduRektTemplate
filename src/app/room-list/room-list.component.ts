@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import {DeleteCheckboxComponent} from '../delete-checkbox/delete-checkbox.component';
 import { Room } from '../model-service/room/room';
 import {RoomService} from '../model-service/room/room.service';
 import { RoomDetailsComponent } from '../room-details/room-details.component';
@@ -78,6 +79,20 @@ export class RoomListComponent implements OnInit {
       this.formDialogOpened = true;
       const dialogRef = this.dialog.open(RoomDetailsComponent, {data: {room, mode}});
       dialogRef.afterClosed().subscribe((result)=>{
+        this.formDialogOpened = false;
+        if (result && result.delete) {
+          this.confirmDelete(room.code);
+        }
+        this.reloadData();
+      });
+    }
+  }
+
+  openDeleteDialog(room: any, mode: string) {
+    if (!this.formDialogOpened) {
+      this.formDialogOpened = true;
+      const checkbox = this.dialog.open(DeleteCheckboxComponent);
+      checkbox.afterClosed().subscribe((result)=>{
         this.formDialogOpened = false;
         if (result && result.delete) {
           this.confirmDelete(room.code);

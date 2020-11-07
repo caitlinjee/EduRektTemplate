@@ -1,0 +1,14 @@
+
+<div style="padding:20px; width: 300px; margin: auto">
+    <h1 mat-dialog-title style="padding-top: 10px">Delete Rooms</h1>
+    <mat-label mat-dialog-content>Check the rooms you want to delete.</mat-label><br>
+
+    <section class="example-section">
+        <mat-checkbox class="example-margin">Room1</mat-checkbox><br>
+        <mat-checkbox class="example-margin">Room2</mat-checkbox>
+    </section>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true">Cancel</button>
+        <button mat-raised-button color="primary" (click)="confirmDelete()">OK</button>
+    </mat-dialog-actions>
+</div>

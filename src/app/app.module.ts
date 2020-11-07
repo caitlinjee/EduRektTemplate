@@ -12,6 +12,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatRippleModule} from '@angular/material/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { RoomDetailsComponent } from './room-details/room-details.component';
 import { StudentListComponent } from './student-list/student-list.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
+import {DeleteCheckboxComponent} from './delete-checkbox/delete-checkbox.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-di
     RoomDetailsComponent,
     StudentListComponent,
     StudentDetailsComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    DeleteCheckboxComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-di
     MatDialogModule,
     MatRippleModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
