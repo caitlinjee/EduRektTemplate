@@ -13,6 +13,8 @@ export class RoomDetailsComponent implements OnInit {
 
   room: any;
   roomForm: FormGroup;
+  
+  hasData: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<RoomDetailsComponent>,
@@ -23,6 +25,8 @@ export class RoomDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.room = this.roomData.room;
+
+    this.hasData = this.room ? true : false;
 
     this.roomForm = this.formBuilder.group({
       code: [{value: this.room ? this.room.code : '', disabled: this.room ? true : false}, Validators.required],
@@ -51,6 +55,10 @@ export class RoomDetailsComponent implements OnInit {
       const finalData: Room = Object.assign(dataCopy, {code: this.roomData.room.code}) as Room;
       this.roomService.updateRoom(this.roomData.room.code, finalData).subscribe();
     }
+  }
+
+  onDelete() {
+    this.dialogRef.close({delete: true});
   }
 
 }

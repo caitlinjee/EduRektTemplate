@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { Room } from '../model-service/room/room';
 import {RoomService} from '../model-service/room/room.service';
 import { RoomDetailsComponent } from '../room-details/room-details.component';
@@ -17,6 +20,11 @@ export class RoomListComponent implements OnInit {
   tableColumns: string[] = ['code', 'name', 'address', 'max_capacity'];
 
   filterForm: FormGroup;
+
+  formDialogOpened = false;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
     private roomService: RoomService,
@@ -66,8 +74,28 @@ export class RoomListComponent implements OnInit {
   }
 
   openEditDialog(room: any, mode: string) {
-    const dialogRef = this.dialog.open(RoomDetailsComponent, {data: {room, mode}});
-    dialogRef.afterClosed().subscribe(()=>{this.reloadData();});
+    if (!this.formDialogOpened) {
+      this.formDialogOpened = true;
+      const dialogRef = this.dialog.open(RoomDetailsComponent, {data: {room, mode}});
+      dialogRef.afterClosed().subscribe((result)=>{
+        this.formDialogOpened = false;
+        if (result && result.delete) {
+          this.confirmDelete(room.code);
+        }
+        this.reloadData();
+      });
+    }
+  }
+
+  confirmDelete(code: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data: `Room ${code}`});
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result.event == 'yes') {
+          this.roomService.deleteRoom(code).subscribe(() => this.reloadData());
+        }
+      }
+    );
   }
 
 }

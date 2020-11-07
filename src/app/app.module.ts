@@ -10,6 +10,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatRippleModule} from '@angular/material/core';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +20,7 @@ import { RoomListComponent } from './room-list/room-list.component';
 import { RoomDetailsComponent } from './room-details/room-details.component';
 import { StudentListComponent } from './student-list/student-list.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
+import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
     RoomListComponent,
     RoomDetailsComponent,
     StudentListComponent,
-    StudentDetailsComponent
+    StudentDetailsComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,9 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
     MatInputModule,
     MatTableModule,
     MatDialogModule,
-    MatRippleModule
+    MatRippleModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
